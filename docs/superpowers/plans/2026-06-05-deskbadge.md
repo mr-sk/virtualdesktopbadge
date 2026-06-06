@@ -13,7 +13,7 @@
 ## File Structure
 
 ```
-~/dev/DeskBadge/
+~/Research/DeskBadge/
   Package.swift
   Sources/
     DeskBadgeCore/                 # pure, testable logic
@@ -91,13 +91,13 @@ print("DeskBadge starting")
 
 - [ ] **Step 4: Build to verify the package is valid**
 
-Run: `cd ~/dev/DeskBadge && swift build`
+Run: `cd ~/Research/DeskBadge && swift build`
 Expected: `Build complete!` with no errors.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Package.swift Sources
 git commit -m "chore: scaffold Swift package"
 ```
@@ -165,7 +165,7 @@ final class DisplaySpacesTests: XCTestCase {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter DisplaySpacesTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter DisplaySpacesTests`
 Expected: FAIL — `cannot find 'parseDisplaySpaces' in scope` / `DisplaySpaces` not found.
 
 - [ ] **Step 3: Write the implementation**
@@ -207,18 +207,18 @@ public func parseDisplaySpaces(_ raw: [[String: Any]]) -> [DisplaySpaces] {
 - [ ] **Step 4: Delete the placeholder**
 
 ```bash
-rm ~/dev/DeskBadge/Sources/DeskBadgeCore/Placeholder.swift
+rm ~/Research/DeskBadge/Sources/DeskBadgeCore/Placeholder.swift
 ```
 
 - [ ] **Step 5: Run the test to verify it passes**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter DisplaySpacesTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter DisplaySpacesTests`
 Expected: PASS — 3 tests pass.
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/DeskBadgeCore Tests
 git rm --cached Sources/DeskBadgeCore/Placeholder.swift 2>/dev/null; true
 git commit -am "feat: display-spaces model and parser"
@@ -276,7 +276,7 @@ final class SpaceIndexTests: XCTestCase {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter SpaceIndexTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter SpaceIndexTests`
 Expected: FAIL — `cannot find 'spaceIndex' in scope`.
 
 - [ ] **Step 3: Write the implementation**
@@ -301,13 +301,13 @@ public func resolveIndex(displays: [DisplaySpaces], activeDisplayUUID: String) -
 
 - [ ] **Step 4: Run the test to verify it passes**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter SpaceIndexTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter SpaceIndexTests`
 Expected: PASS — 5 tests pass.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/DeskBadgeCore/SpaceIndex.swift Tests/DeskBadgeCoreTests/SpaceIndexTests.swift
 git commit -m "feat: space-index resolution logic"
 ```
@@ -367,7 +367,7 @@ final class SpaceTrackerTests: XCTestCase {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter SpaceTrackerTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter SpaceTrackerTests`
 Expected: FAIL — `cannot find 'SpaceTracker' in scope`.
 
 - [ ] **Step 3: Write the implementation**
@@ -393,13 +393,13 @@ public final class SpaceTracker {
 
 - [ ] **Step 4: Run the test to verify it passes**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter SpaceTrackerTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter SpaceTrackerTests`
 Expected: PASS — 3 tests pass.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/DeskBadgeCore/SpaceTracker.swift Tests/DeskBadgeCoreTests/SpaceTrackerTests.swift
 git commit -m "feat: SpaceTracker state holder"
 ```
@@ -441,7 +441,7 @@ final class BadgeRendererTests: XCTestCase {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter BadgeRendererTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter BadgeRendererTests`
 Expected: FAIL — `cannot find 'BadgeRenderer' in scope`.
 
 - [ ] **Step 3: Write the implementation**
@@ -487,18 +487,18 @@ public enum BadgeRenderer {
 
 - [ ] **Step 4: Run the test to verify it passes**
 
-Run: `cd ~/dev/DeskBadge && swift test --filter BadgeRendererTests`
+Run: `cd ~/Research/DeskBadge && swift test --filter BadgeRendererTests`
 Expected: PASS — 2 tests pass.
 
 - [ ] **Step 5: Run the full suite**
 
-Run: `cd ~/dev/DeskBadge && swift test`
+Run: `cd ~/Research/DeskBadge && swift test`
 Expected: PASS — all tests across all files pass.
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/DeskBadgeCore/BadgeRenderer.swift Tests/DeskBadgeCoreTests/BadgeRendererTests.swift
 git commit -m "feat: badge renderer"
 ```
@@ -540,13 +540,13 @@ func rawManagedDisplaySpaces() -> [[String: Any]] {
 
 - [ ] **Step 2: Build to verify it compiles**
 
-Run: `cd ~/dev/DeskBadge && swift build`
+Run: `cd ~/Research/DeskBadge && swift build`
 Expected: `Build complete!` (warnings about private symbols are acceptable; errors are not).
 
 - [ ] **Step 3: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/deskbadge/CGSBridge.swift
 git commit -m "feat: private CGS bridge for managed display spaces"
 ```
@@ -598,13 +598,13 @@ enum ScreenInfo {
 
 - [ ] **Step 2: Build to verify it compiles**
 
-Run: `cd ~/dev/DeskBadge && swift build`
+Run: `cd ~/Research/DeskBadge && swift build`
 Expected: `Build complete!`
 
 - [ ] **Step 3: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/deskbadge/ScreenInfo.swift
 git commit -m "feat: active screen and display UUID lookup"
 ```
@@ -733,13 +733,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 - [ ] **Step 3: Build to verify it compiles**
 
-Run: `cd ~/dev/DeskBadge && swift build`
+Run: `cd ~/Research/DeskBadge && swift build`
 Expected: `Build complete!`
 
 - [ ] **Step 4: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add Sources/deskbadge/AppDelegate.swift Sources/deskbadge/main.swift
 git commit -m "feat: app delegate wiring status item, key monitor, and notification"
 ```
@@ -797,7 +797,7 @@ echo "Built $APP"
 - [ ] **Step 2: Make it executable and run it**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 chmod +x scripts/package_app.sh
 ./scripts/package_app.sh
 ```
@@ -807,7 +807,7 @@ Expected: `Built build/DeskBadge.app` with no errors.
 - [ ] **Step 3: Launch the app**
 
 ```bash
-open ~/dev/DeskBadge/build/DeskBadge.app
+open ~/Research/DeskBadge/build/DeskBadge.app
 ```
 
 Expected: a small boxed number appears in the menu bar. (It may read `0` until
@@ -834,7 +834,7 @@ Confirm each, by observing the menu-bar box:
 - [ ] **Step 6: Commit**
 
 ```bash
-cd ~/dev/DeskBadge
+cd ~/Research/DeskBadge
 git add scripts/package_app.sh
 git commit -m "build: package script for .app bundle and login-item support"
 ```
@@ -848,7 +848,7 @@ git commit -m "build: package script for .app bundle and login-item support"
   multi-display active-screen resolution (Tasks 3, 7), Accessibility prompt
   (Task 9 manual grant), Launch at Login via `SMAppService` (Tasks 8–9), private
   API isolated to one file (Task 6), unit-tested pure core (Tasks 2–5),
-  `LSUIElement`/`.accessory` agent (Tasks 8–9), location `~/dev/DeskBadge`. All
+  `LSUIElement`/`.accessory` agent (Tasks 8–9), location `~/Research/DeskBadge`. All
   spec sections map to a task.
 - **Naming consistency:** `parseDisplaySpaces`, `DisplaySpaces`, `spaceIndex`,
   `resolveIndex`, `SpaceTracker.set/onChange/current`, `BadgeRenderer.image`,

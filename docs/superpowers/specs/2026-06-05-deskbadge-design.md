@@ -121,4 +121,4 @@ swipe / Mission Control switch
 - Locally signed with the user's own signing identity; no notarization (personal
   use).
 - Launch at Login via `SMAppService`.
-- Project location: `~/dev/DeskBadge`.
+- Project location: `~/Research/DeskBadge`.
