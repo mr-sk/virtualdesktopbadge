@@ -14,4 +14,10 @@ final class BadgeRendererTests: XCTestCase {
         let image = BadgeRenderer.image(forNumber: 12, size: 18)
         XCTAssertEqual(image.size.width, 18, accuracy: 0.5)
     }
+
+    func test_handles_three_digit_numbers_without_changing_image_size() {
+        let image = BadgeRenderer.image(forNumber: 100, size: 18)
+        XCTAssertEqual(image.size.width, 18, accuracy: 0.5)
+        XCTAssertEqual(image.size.height, 18, accuracy: 0.5)
+    }
 }

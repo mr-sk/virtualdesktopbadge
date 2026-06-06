@@ -14,18 +14,31 @@ public enum BadgeRenderer {
         NSColor.black.setStroke()
         box.stroke()
 
+        let text = "\(number)" as NSString
+
+        // Auto-shrink font so multi-digit numbers fit inside the box.
+        let available = boxRect.width - 2
+        var fontSize = size * 0.55
+        var font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .bold)
+        var textSize = text.size(withAttributes: [.font: font])
+        if textSize.width > available {
+            fontSize *= available / textSize.width
+            font = NSFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .bold)
+        }
+
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: NSFont.monospacedDigitSystemFont(ofSize: size * 0.55, weight: .bold),
+            .font: font,
             .foregroundColor: NSColor.black,
             .paragraphStyle: paragraph,
         ]
-        let text = "\(number)" as NSString
-        let textSize = text.size(withAttributes: attributes)
-        let origin = NSPoint(x: (size - textSize.width) / 2,
-                             y: (size - textSize.height) / 2)
-        text.draw(at: origin, withAttributes: attributes)
+        textSize = text.size(withAttributes: attributes)
+
+        // Use font.descender (negative) to nudge glyphs to optical center.
+        let x = (size - textSize.width) / 2
+        let y = (size - textSize.height) / 2 - font.descender / 2
+        text.draw(at: NSPoint(x: x, y: y), withAttributes: attributes)
 
         image.unlockFocus()
         image.isTemplate = true   // tint follows the menu bar appearance
