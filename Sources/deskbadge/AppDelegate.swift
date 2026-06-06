@@ -1,4 +1,5 @@
 import AppKit
+import ApplicationServices
 import ServiceManagement
 import DeskBadgeCore
 
@@ -19,9 +20,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         buildMenu()
+        promptForAccessibilityIfNeeded()
         startKeyMonitor()
         observeSpaceChanges()
         refreshFromSystem()   // initial value
+    }
+
+    // MARK: - Accessibility
+
+    /// Trigger the system Accessibility prompt if not yet trusted.
+    /// The global key monitor only works once access is granted.
+    private func promptForAccessibilityIfNeeded() {
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
+        _ = AXIsProcessTrustedWithOptions(options as CFDictionary)
     }
 
     // MARK: - Inputs
@@ -62,6 +73,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func buildMenu() {
         let menu = NSMenu()
+        let accessibilityItem = NSMenuItem(
+            title: "Grant Accessibility Access\u{2026}",
+            action: #selector(openAccessibilitySettings),
+            keyEquivalent: ""
+        )
+        accessibilityItem.target = self
+        menu.addItem(accessibilityItem)
         let loginItem = NSMenuItem(
             title: "Launch at Login",
             action: #selector(toggleLaunchAtLogin),
@@ -75,6 +93,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                 action: #selector(NSApplication.terminate(_:)),
                                 keyEquivalent: "q"))
         statusItem.menu = menu
+    }
+
+    @objc private func openAccessibilitySettings() {
+        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
+        NSWorkspace.shared.open(url)
     }
 
     @objc private func toggleLaunchAtLogin(_ sender: NSMenuItem) {
