@@ -1,3 +1,7 @@
-import DeskBadgeCore
+import AppKit
 
-print("DeskBadge starting")
+let app = NSApplication.shared
+let delegate = AppDelegate()
+app.delegate = delegate
+app.setActivationPolicy(.accessory)   // no Dock icon, no main window
+app.run()
