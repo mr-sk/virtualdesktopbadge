@@ -6,6 +6,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
+    private static let digitKeyCodes: [UInt16: Int] = [
+        18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+    ]
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -23,12 +26,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Inputs
 
-    /// Instant path: react to ctrl+1...ctrl+9.
+    /// Instant path: react to ctrl+1...ctrl+9 by physical key (layout-independent).
     private func startKeyMonitor() {
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard event.modifierFlags.contains(.control) else { return }
-            guard let chars = event.charactersIgnoringModifiers,
-                  let number = Int(chars), (1...9).contains(number) else { return }
+            guard let number = Self.digitKeyCodes[event.keyCode] else { return }
             self?.tracker.set(number)
         }
     }
