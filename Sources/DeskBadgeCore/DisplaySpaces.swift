@@ -1,5 +1,3 @@
-import Foundation
-
 /// One physical display and the ordered Spaces that belong to it.
 public struct DisplaySpaces: Equatable {
     public let uuid: String

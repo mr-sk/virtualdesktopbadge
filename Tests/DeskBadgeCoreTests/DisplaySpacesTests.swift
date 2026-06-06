@@ -39,4 +39,16 @@ final class DisplaySpacesTests: XCTestCase {
             DisplaySpaces(uuid: "DISPLAY-B", orderedSpaceIDs: [42], currentSpaceID: 42)
         ])
     }
+
+    func test_current_space_is_nil_when_absent() {
+        let raw: [[String: Any]] = [
+            [
+                "Display Identifier": "DISPLAY-C",
+                "Spaces": [["ManagedSpaceID": 1], ["ManagedSpaceID": 2]],
+            ]
+        ]
+        XCTAssertEqual(parseDisplaySpaces(raw), [
+            DisplaySpaces(uuid: "DISPLAY-C", orderedSpaceIDs: [1, 2], currentSpaceID: nil)
+        ])
+    }
 }
