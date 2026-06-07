@@ -8,6 +8,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
     private let noteStore = NoteStore(store: UserDefaults.standard)
+    // Maps the number-row key codes to desktops for the instant ctrl+digit path.
+    // This is the keyboard shortcut set only (ten digit keys: 1-9, 0), NOT a cap
+    // on desktops — higher desktops still display correctly via the system read.
     private static let digitKeyCodes: [UInt16: Int] = [
         18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9, 29: 10,
     ]
