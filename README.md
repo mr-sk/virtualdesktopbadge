@@ -1,11 +1,15 @@
-<img src="screenshots/icon.png" width="104" align="right" alt="Virtual Desktop Badge icon">
+<div align="center">
 
-# Virtual Desktop Badge
+<img src="screenshots/icon.png" width="100" alt="Virtual Desktop Badge icon">
 
-[![CI](https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml/badge.svg)](https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/mr-sk/virtualdesktopbadge)](https://github.com/mr-sk/virtualdesktopbadge/releases/latest)
-![Platform](https://img.shields.io/badge/macOS-13%2B-blue)
-[![Downloads](https://img.shields.io/github/downloads/mr-sk/virtualdesktopbadge/total)](https://github.com/mr-sk/virtualdesktopbadge/releases)
+<h1>Virtual Desktop Badge</h1>
+
+<a href="https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml"><img src="https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+<a href="https://github.com/mr-sk/virtualdesktopbadge/releases/latest"><img src="https://img.shields.io/github/v/release/mr-sk/virtualdesktopbadge" alt="Latest release"></a>
+<img src="https://img.shields.io/badge/macOS-13%2B-blue" alt="Platform">
+<a href="https://github.com/mr-sk/virtualdesktopbadge/releases"><img src="https://img.shields.io/github/downloads/mr-sk/virtualdesktopbadge/total" alt="Downloads"></a>
+
+</div>
 
 A tiny macOS menu-bar app that shows **which desktop (Space) you're on** as a number in a small box. No Dock icon, no window — just the number.
 
