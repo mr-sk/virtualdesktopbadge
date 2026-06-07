@@ -119,6 +119,5 @@ The pure logic lives in `VirtualDesktopBadgeCore` precisely so it can be tested 
 
 ## License
 
-Personal project — do as you like with it.
-
 An idea and project brought to you by **sk** from [skheavyindustries.com](https://skheavyindustries.com).
+Always welcome to feedback & improvements!
