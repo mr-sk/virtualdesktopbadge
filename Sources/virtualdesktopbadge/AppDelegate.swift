@@ -7,6 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
+    private var pendingKeyConfirm: DispatchWorkItem?
     private let noteStore = NoteStore(store: UserDefaults.standard)
     // Maps the number-row key codes to desktops for the instant ctrl+digit path.
     // This is the keyboard shortcut set only (ten digit keys: 1-9, 0), NOT a cap
@@ -66,10 +67,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// which is layout-independent.
     private func startKeyMonitor() {
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self else { return }
             guard event.modifierFlags.contains(.control) else { return }
             guard let number = Self.digitKeyCodes[event.keyCode] else { return }
-            self?.tracker.set(number)
+            self.tracker.set(number)        // optimistic, zero-lag guess
+            self.scheduleKeyConfirm()
         }
+    }
+
+    /// After an instant ctrl+digit guess, confirm it against the real desktop a
+    /// moment later — unless a genuine space change arrives first (which already
+    /// corrects it and cancels this). This keeps the guess safe even when
+    /// ctrl+digit isn't actually mapped to switching desktops.
+    private func scheduleKeyConfirm() {
+        pendingKeyConfirm?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.refreshFromSystem() }
+        pendingKeyConfirm = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: work)
     }
 
     /// Correction path: re-read on any space change (swipe / Mission Control)
@@ -90,6 +104,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func systemChanged() {
+        // A real switch happened, so the pending ctrl+digit confirm is moot.
+        pendingKeyConfirm?.cancel()
+        pendingKeyConfirm = nil
         refreshFromSystem()
     }
 
