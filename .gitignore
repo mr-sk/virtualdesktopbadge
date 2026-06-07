@@ -3,3 +3,6 @@
 build/
 DerivedData/
 *.xcuserstate
+
+# Local planning/design docs (kept on disk, not versioned)
+docs/superpowers/
