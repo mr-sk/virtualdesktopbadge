@@ -37,6 +37,14 @@ cp -R build/DeskBadge.app /Applications/
 open /Applications/DeskBadge.app
 ```
 
+`package_app.sh` also generates the app icon and ad-hoc signs the bundle, so no Xcode project is needed.
+
+**Launch at login** can be enabled from the menu (**Launch at Login**), or headlessly:
+
+```bash
+/Applications/DeskBadge.app/Contents/MacOS/DeskBadge --register-login
+```
+
 ### First launch: grant Accessibility access
 
 The `ctrl+N` instant path uses a global key monitor, which macOS gates behind **Accessibility** permission. On first launch DeskBadge prompts for it:
@@ -51,7 +59,11 @@ You can reopen this pane any time from the menu: **Grant Accessibility Access…
 ## Usage
 
 - Switch desktops however you like; the badge follows.
+- **Labels:** beside the number, DeskBadge shows a label for the current desktop:
+  - a **manual note** if you've set one (e.g. `email`, `deep work`), or
+  - otherwise the **apps currently on that desktop** (frontmost first, up to 3 then `+N`), updated live as you open and close them.
 - Click the badge for the menu:
+  - **Set Note for This Desktop…** — type a note for the current desktop (blank clears it; a note overrides the auto app list).
   - **Grant Accessibility Access…** — opens the relevant Settings pane.
   - **Launch at Login** — start DeskBadge automatically (toggles a checkmark).
   - **Quit DeskBadge**
@@ -86,8 +98,7 @@ Tests/
   DeskBadgeCoreTests/   # XCTest coverage of the pure core
 scripts/
   package_app.sh        # build + assemble + sign the .app bundle
-docs/
-  superpowers/          # design spec and implementation plan
+  make_icon.swift       # render the app icon (.iconset) for packaging
 ```
 
 ## Development
@@ -101,7 +112,8 @@ The pure logic lives in `DeskBadgeCore` precisely so it can be tested without a 
 
 ## Limitations
 
-- The keyboard path covers `ctrl+1` … `ctrl+9` (desktops 1–9). Higher desktops still update via the notification/swipe path.
+- The instant keyboard path covers `ctrl+1` … `ctrl+0` (desktops 1–10, the number-row keys). Higher desktops still display correctly via the notification/swipe path — just without the zero-lag shortcut.
+- Auto app-labels only reflect the desktop you're currently viewing; macOS doesn't expose the windows on desktops you aren't looking at (which is all the badge needs).
 - The Space-number derivation relies on a private, undocumented macOS API; it may need updating on major macOS releases.
 
 ## License
