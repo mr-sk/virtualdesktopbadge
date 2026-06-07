@@ -27,6 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         promptForAccessibilityIfNeeded()
         startKeyMonitor()
         observeSpaceChanges()
+        observeApps()
         refreshFromSystem()   // initial value
     }
 
@@ -41,11 +42,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Inputs
 
-    /// Draw the number box and show the desktop's note as the button title.
+    /// Draw the number box and the desktop's label (note or live app list).
     private func render(number: Int) {
         statusItem.button?.image = BadgeRenderer.image(forNumber: number)
         statusItem.button?.imagePosition = .imageLeading
-        statusItem.button?.title = noteStore.note(for: number).map { " \($0)" } ?? ""
+        statusItem.button?.title = titleText(for: number)
+    }
+
+    /// Refresh only the label for the current desktop (e.g. when apps change).
+    private func refreshLabel() {
+        guard let number = tracker.current else { return }
+        statusItem.button?.title = titleText(for: number)
+    }
+
+    /// The menu-bar label: a manual note if one is set, otherwise the apps
+    /// currently on this desktop. Prefixed with a space to sit beside the box.
+    private func titleText(for number: Int) -> String {
+        let label = noteStore.note(for: number) ?? AppLabel.format(DesktopApps.current())
+        return label.isEmpty ? "" : " \(label)"
     }
 
     /// Instant path: react to ctrl+1...ctrl+9 by physical key (layout-independent).
@@ -76,6 +90,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func systemChanged() {
         refreshFromSystem()
+    }
+
+    /// Keep the live app list fresh as apps are launched, activated, or quit.
+    private func observeApps() {
+        let center = NSWorkspace.shared.notificationCenter
+        for name: NSNotification.Name in [
+            NSWorkspace.didActivateApplicationNotification,
+            NSWorkspace.didLaunchApplicationNotification,
+            NSWorkspace.didTerminateApplicationNotification,
+        ] {
+            center.addObserver(self, selector: #selector(appsChanged), name: name, object: nil)
+        }
+    }
+
+    @objc private func appsChanged() {
+        refreshLabel()
     }
 
     /// Show the current desktop of the primary display (the menu-bar screen).
