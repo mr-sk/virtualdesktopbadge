@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
     private var spaceSnapshot: [String: Int] = [:]
+    private let noteStore = NoteStore(store: UserDefaults.standard)
     private static let digitKeyCodes: [UInt16: Int] = [
         18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
     ]
@@ -17,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.image = BadgeRenderer.image(forNumber: 0)
 
         tracker.onChange = { [weak self] number in
-            self?.statusItem.button?.image = BadgeRenderer.image(forNumber: number)
+            self?.render(number: number)
         }
 
         buildMenu()
@@ -37,6 +38,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // MARK: - Inputs
+
+    /// Draw the number box and show the desktop's note as the button title.
+    private func render(number: Int) {
+        statusItem.button?.image = BadgeRenderer.image(forNumber: number)
+        statusItem.button?.imagePosition = .imageLeading
+        statusItem.button?.title = noteStore.note(for: number).map { " \($0)" } ?? ""
+    }
 
     /// Instant path: react to ctrl+1...ctrl+9 by physical key (layout-independent).
     private func startKeyMonitor() {
@@ -79,6 +87,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func buildMenu() {
         let menu = NSMenu()
+        let noteItem = NSMenuItem(
+            title: "Set Note for This Desktop\u{2026}",
+            action: #selector(setNoteForCurrentDesktop),
+            keyEquivalent: ""
+        )
+        noteItem.target = self
+        menu.addItem(noteItem)
+        menu.addItem(.separator())
         let accessibilityItem = NSMenuItem(
             title: "Grant Accessibility Access\u{2026}",
             action: #selector(openAccessibilitySettings),
@@ -99,6 +115,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                 action: #selector(NSApplication.terminate(_:)),
                                 keyEquivalent: "q"))
         statusItem.menu = menu
+    }
+
+    @objc private func setNoteForCurrentDesktop() {
+        guard let number = tracker.current else { return }
+        let alert = NSAlert()
+        alert.messageText = "Note for Desktop \(number)"
+        alert.informativeText = "Shown next to the number in the menu bar. Leave blank to clear."
+        let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 220, height: 24))
+        field.stringValue = noteStore.note(for: number) ?? ""
+        alert.accessoryView = field
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
+        NSApp.activate(ignoringOtherApps: true)
+        if alert.runModal() == .alertFirstButtonReturn {
+            noteStore.setNote(field.stringValue, for: number)
+            render(number: number)
+        }
+    }
+
+    /// Disable "Set Note…" until we know which desktop we're on.
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(setNoteForCurrentDesktop) {
+            return tracker.current != nil
+        }
+        return true
     }
 
     @objc private func openAccessibilitySettings() {
