@@ -1,5 +1,5 @@
 import XCTest
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 private final class InMemoryStore: KeyValueStore {
     var data: [String: [String: String]] = [:]
@@ -10,8 +10,8 @@ private final class InMemoryStore: KeyValueStore {
 final class NoteStoreTests: XCTestCase {
     func test_set_then_get_round_trip() {
         let store = NoteStore(store: InMemoryStore())
-        store.setNote("deskbadge", for: 7)
-        XCTAssertEqual(store.note(for: 7), "deskbadge")
+        store.setNote("virtualdesktopbadge", for: 7)
+        XCTAssertEqual(store.note(for: 7), "virtualdesktopbadge")
     }
 
     func test_get_is_nil_when_unset() {

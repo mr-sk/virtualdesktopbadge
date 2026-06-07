@@ -1,5 +1,5 @@
 import XCTest
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 final class SpaceTrackerTests: XCTestCase {
     func test_set_updates_current_and_fires_callback() {

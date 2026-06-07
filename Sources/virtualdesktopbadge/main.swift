@@ -1,7 +1,7 @@
 import AppKit
 import ServiceManagement
 
-// Headless mode: `DeskBadge --register-login` registers the app as a login item
+// Headless mode: `VirtualDesktopBadge --register-login` registers the app as a login item
 // (same SMAppService mechanism as the menu toggle) and exits. Run it from the
 // installed copy in /Applications so the registration points there.
 if CommandLine.arguments.contains("--register-login") {

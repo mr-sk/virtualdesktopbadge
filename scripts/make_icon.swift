@@ -1,6 +1,6 @@
 import AppKit
 
-// Renders the DeskBadge app icon (a desktops grid with one active, numbered
+// Renders the Virtual Desktop Badge app icon (a desktops grid with one active, numbered
 // desktop) into an .iconset directory passed as the first argument.
 
 func squircle(_ rect: NSRect, _ r: CGFloat) -> NSBezierPath {

@@ -20,7 +20,7 @@ extension UserDefaults: KeyValueStore {
 /// A flat map of desktop number → note, persisted via a `KeyValueStore`.
 public final class NoteStore {
     private let store: KeyValueStore
-    private let key = "deskbadgeNotes"
+    private let key = "virtualdesktopbadgeNotes"
 
     public init(store: KeyValueStore) {
         self.store = store

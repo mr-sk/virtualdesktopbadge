@@ -1,5 +1,5 @@
 import XCTest
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 final class SpaceIndexTests: XCTestCase {
     func test_index_is_one_based_position() {

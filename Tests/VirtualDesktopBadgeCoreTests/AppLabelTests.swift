@@ -1,5 +1,5 @@
 import XCTest
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 final class AppLabelTests: XCTestCase {
     func test_empty_list_is_empty_string() {

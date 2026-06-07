@@ -1,7 +1,7 @@
 import AppKit
 import ApplicationServices
 import ServiceManagement
-import DeskBadgeCore
+import VirtualDesktopBadgeCore
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
@@ -147,7 +147,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         loginItem.state = (SMAppService.mainApp.status == .enabled) ? .on : .off
         menu.addItem(loginItem)
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit DeskBadge",
+        menu.addItem(NSMenuItem(title: "Quit Virtual Desktop Badge",
                                 action: #selector(NSApplication.terminate(_:)),
                                 keyEquivalent: "q"))
         statusItem.menu = menu
@@ -193,7 +193,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 sender.state = .on
             }
         } catch {
-            NSLog("DeskBadge: launch-at-login toggle failed: \(error)")
+            NSLog("Virtual Desktop Badge: launch-at-login toggle failed: \(error)")
         }
     }
 }

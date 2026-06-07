@@ -1,5 +1,5 @@
 import XCTest
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 final class DisplaySpacesTests: XCTestCase {
     func test_parses_uuid_ordered_ids_and_current() {

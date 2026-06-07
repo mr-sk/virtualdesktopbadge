@@ -1,6 +1,6 @@
 import XCTest
 import AppKit
-@testable import DeskBadgeCore
+@testable import VirtualDesktopBadgeCore
 
 final class BadgeRendererTests: XCTestCase {
     func test_produces_square_template_image_of_requested_size() {

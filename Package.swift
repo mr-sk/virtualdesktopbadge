@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "DeskBadge",
+    name: "VirtualDesktopBadge",
     platforms: [.macOS(.v13)],
     targets: [
-        .target(name: "DeskBadgeCore"),
+        .target(name: "VirtualDesktopBadgeCore"),
         .executableTarget(
-            name: "deskbadge",
-            dependencies: ["DeskBadgeCore"]
+            name: "virtualdesktopbadge",
+            dependencies: ["VirtualDesktopBadgeCore"]
         ),
         .testTarget(
-            name: "DeskBadgeCoreTests",
-            dependencies: ["DeskBadgeCore"]
+            name: "VirtualDesktopBadgeCoreTests",
+            dependencies: ["VirtualDesktopBadgeCore"]
         ),
     ]
 )
