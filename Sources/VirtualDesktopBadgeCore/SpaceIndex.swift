@@ -4,8 +4,8 @@ public func spaceIndex(orderedSpaceIDs: [Int], activeSpaceID: Int) -> Int? {
     return idx + 1
 }
 
-/// Resolve the 1-based Space number for the active display.
-/// Falls back to the first display when the UUID isn't found.
+/// Resolve the 1-based desktop number for the display matching `activeDisplayUUID`,
+/// falling back to the first display when the UUID isn't found.
 public func resolveIndex(displays: [DisplaySpaces], activeDisplayUUID: String) -> Int? {
     let display = displays.first { $0.uuid == activeDisplayUUID } ?? displays.first
     guard let display, let current = display.currentSpaceID else { return nil }

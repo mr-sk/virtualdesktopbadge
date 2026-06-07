@@ -62,7 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return label.isEmpty ? "" : " \(label)"
     }
 
-    /// Instant path: react to ctrl+1...ctrl+9 by physical key (layout-independent).
+    /// Instant path: react to ctrl+1…ctrl+0 (desktops 1–10) by physical key code,
+    /// which is layout-independent.
     private func startKeyMonitor() {
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard event.modifierFlags.contains(.control) else { return }
@@ -123,34 +124,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func buildMenu() {
         let menu = NSMenu()
-        let noteItem = NSMenuItem(
-            title: "Set Note for This Desktop\u{2026}",
-            action: #selector(setNoteForCurrentDesktop),
-            keyEquivalent: ""
-        )
-        noteItem.target = self
-        menu.addItem(noteItem)
+        menu.addItem(item("Set Note for This Desktop\u{2026}", #selector(setNoteForCurrentDesktop)))
         menu.addItem(.separator())
-        let accessibilityItem = NSMenuItem(
-            title: "Grant Accessibility Access\u{2026}",
-            action: #selector(openAccessibilitySettings),
-            keyEquivalent: ""
-        )
-        accessibilityItem.target = self
-        menu.addItem(accessibilityItem)
-        let loginItem = NSMenuItem(
-            title: "Launch at Login",
-            action: #selector(toggleLaunchAtLogin),
-            keyEquivalent: ""
-        )
-        loginItem.target = self
+        menu.addItem(item("Grant Accessibility Access\u{2026}", #selector(openAccessibilitySettings)))
+        let loginItem = item("Launch at Login", #selector(toggleLaunchAtLogin))
         loginItem.state = (SMAppService.mainApp.status == .enabled) ? .on : .off
         menu.addItem(loginItem)
         menu.addItem(.separator())
+        // Quit targets the responder chain (NSApp), so it isn't built with `item`.
         menu.addItem(NSMenuItem(title: "Quit Virtual Desktop Badge",
                                 action: #selector(NSApplication.terminate(_:)),
                                 keyEquivalent: "q"))
         statusItem.menu = menu
+    }
+
+    /// A menu item that targets this delegate.
+    private func item(_ title: String, _ action: Selector) -> NSMenuItem {
+        let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
+        item.target = self
+        return item
     }
 
     @objc private func setNoteForCurrentDesktop() {
