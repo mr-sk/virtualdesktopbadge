@@ -9,7 +9,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var keyMonitor: Any?
     private let noteStore = NoteStore(store: UserDefaults.standard)
     private static let digitKeyCodes: [UInt16: Int] = [
-        18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
+        18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9, 29: 10,
     ]
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -54,17 +54,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    /// Correction path: any space change (incl. swipe / Mission Control).
+    /// Correction path: re-read on any space change (swipe / Mission Control)
+    /// and on any display reconfiguration (docking / undocking a monitor).
     private func observeSpaceChanges() {
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
-            selector: #selector(spaceChanged),
+            selector: #selector(systemChanged),
             name: NSWorkspace.activeSpaceDidChangeNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(systemChanged),
+            name: NSApplication.didChangeScreenParametersNotification,
             object: nil
         )
     }
 
-    @objc private func spaceChanged() {
+    @objc private func systemChanged() {
         refreshFromSystem()
     }
 
