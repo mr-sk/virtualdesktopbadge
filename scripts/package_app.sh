@@ -10,6 +10,13 @@ mkdir -p "$APP/Contents/MacOS"
 
 cp ".build/release/deskbadge" "$APP/Contents/MacOS/DeskBadge"
 
+# Build the app icon (.icns) from the generator and place it in Resources.
+mkdir -p "$APP/Contents/Resources"
+ICONSET="build/DeskBadge.iconset"
+rm -rf "$ICONSET"
+swift scripts/make_icon.swift "$ICONSET"
+iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
+
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
@@ -22,6 +29,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
   <key>CFBundleVersion</key><string>1</string>
   <key>CFBundleShortVersionString</key><string>1.0</string>
   <key>CFBundleExecutable</key><string>DeskBadge</string>
+  <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>LSUIElement</key><true/>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
