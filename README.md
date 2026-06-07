@@ -8,6 +8,17 @@ macOS has keyboard shortcuts to jump between desktops (`ctrl+1`, `ctrl+2`, …) 
 
 ![Virtual Desktop Badge in the menu bar, with its menu open](screenshots/menu.png)
 
+## Download
+
+Grab the latest `VirtualDesktopBadge.zip` from the [**Releases**](https://github.com/mr-sk/virtualdesktopbadge/releases/latest) page, unzip it, and move **VirtualDesktopBadge.app** to `/Applications`.
+
+The app is ad-hoc signed (not notarized), so macOS blocks it on first launch. Allow it once with either:
+
+- Right-click the app → **Open** → **Open**, or
+- `xattr -dr com.apple.quarantine /Applications/VirtualDesktopBadge.app`
+
+Prefer to build it yourself? See [Build & Install](#build--install).
+
 ## Features
 
 - **Boxed number** in the menu bar showing the current desktop.

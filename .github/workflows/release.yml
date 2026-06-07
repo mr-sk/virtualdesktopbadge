@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Gate on the pure-logic tests. BadgeRendererTests is skipped because it
+      # draws with AppKit, which isn't reliable on a headless CI runner; the
+      # build step below still compiles every target.
+      - name: Run tests
+        run: swift test --skip BadgeRendererTests
+
+      - name: Build and package the app
+        run: bash scripts/package_app.sh
+
+      - name: Zip the app bundle
+        run: ditto -c -k --keepParent build/VirtualDesktopBadge.app VirtualDesktopBadge.zip
+
+      - name: Publish release with the binary
+        uses: softprops/action-gh-release@v2
+        with:
+          files: VirtualDesktopBadge.zip
+          body: |
+            ## Virtual Desktop Badge ${{ github.ref_name }}
+
+            Download `VirtualDesktopBadge.zip`, unzip it, and move **VirtualDesktopBadge.app** to `/Applications`.
+
+            **First launch** — the app is ad-hoc signed (not notarized), so macOS blocks it the first time. Allow it once with either:
+
+            - Right-click the app → **Open** → **Open**, or
+            - `xattr -dr com.apple.quarantine /Applications/VirtualDesktopBadge.app`
+
+            Then grant **Accessibility** (for the `ctrl+N` instant path) and optionally toggle **Launch at Login** from the menu.
