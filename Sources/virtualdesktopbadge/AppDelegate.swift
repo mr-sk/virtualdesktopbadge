@@ -141,9 +141,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func buildMenu() {
         let menu = NSMenu()
-        menu.addItem(item("Set Note for This Desktop\u{2026}", #selector(setNoteForCurrentDesktop)))
+        menu.addItem(item("Set Note for This Desktop", #selector(setNoteForCurrentDesktop)))
         menu.addItem(.separator())
-        menu.addItem(item("Grant Accessibility Access\u{2026}", #selector(openAccessibilitySettings)))
+        menu.addItem(item("Grant Accessibility Access", #selector(openAccessibilitySettings)))
         let loginItem = item("Launch at Login", #selector(toggleLaunchAtLogin))
         loginItem.state = (SMAppService.mainApp.status == .enabled) ? .on : .off
         menu.addItem(loginItem)

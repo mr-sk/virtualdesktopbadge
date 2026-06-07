@@ -61,7 +61,7 @@ The `ctrl+N` instant path uses a global key monitor, which macOS gates behind **
 1. **System Settings → Privacy & Security → Accessibility** → enable **Virtual Desktop Badge**.
 2. **Quit and relaunch** the app (the permission only takes effect on a fresh launch).
 
-You can reopen this pane any time from the menu: **Grant Accessibility Access…**
+You can reopen this pane any time from the menu: **Grant Accessibility Access**
 
 > Without the grant, the badge still updates on trackpad/Mission Control switches (that path needs no permission) — only the keyboard-shortcut path is affected.
 
@@ -72,8 +72,8 @@ You can reopen this pane any time from the menu: **Grant Accessibility Access…
   - a **manual note** if you've set one (e.g. `email`, `deep work`), or
   - otherwise the **apps currently on that desktop** (frontmost first, up to 3 then `+N`), updated live as you open and close them.
 - Click the badge for the menu:
-  - **Set Note for This Desktop…** — type a note for the current desktop (blank clears it; a note overrides the auto app list).
-  - **Grant Accessibility Access…** — opens the relevant Settings pane.
+  - **Set Note for This Desktop** — type a note for the current desktop (blank clears it; a note overrides the auto app list).
+  - **Grant Accessibility Access** — opens the relevant Settings pane.
   - **Launch at Login** — start Virtual Desktop Badge automatically (toggles a checkmark).
   - **Quit Virtual Desktop Badge**
 
