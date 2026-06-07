@@ -7,6 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
+    private var spaceSnapshot: [String: Int] = [:]
     private static let digitKeyCodes: [UInt16: Int] = [
         18: 1, 19: 2, 20: 3, 21: 4, 23: 5, 22: 6, 26: 7, 28: 8, 25: 9,
     ]
@@ -60,13 +61,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refreshFromSystem()
     }
 
-    /// Re-derive the true number via the private API for the active display.
+    /// Re-derive the number via the private API, reporting the display whose
+    /// desktop actually changed (not the one under the mouse). On the first read,
+    /// the focused display is used as the starting point.
     private func refreshFromSystem() {
         let displays = parseDisplaySpaces(rawManagedDisplaySpaces())
-        let uuid = ScreenInfo.activeDisplayUUID() ?? ""
-        if let index = resolveIndex(displays: displays, activeDisplayUUID: uuid) {
+        let focusedUUID = NSScreen.main.flatMap(ScreenInfo.displayUUID(for:))
+        if let index = activeDesktopNumber(previous: spaceSnapshot,
+                                           displays: displays,
+                                           focusedUUID: focusedUUID) {
             tracker.set(index)
         }
+        spaceSnapshot = currentSpaceSnapshot(displays)
     }
 
     // MARK: - Menu
