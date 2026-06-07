@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # BadgeRendererTests is skipped because it draws with AppKit, which isn't
+      # reliable on a headless runner; everything else is pure logic.
+      - name: Run tests
+        run: swift test --skip BadgeRendererTests

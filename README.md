@@ -2,6 +2,11 @@
 
 # Virtual Desktop Badge
 
+[![CI](https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml/badge.svg)](https://github.com/mr-sk/virtualdesktopbadge/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/mr-sk/virtualdesktopbadge)](https://github.com/mr-sk/virtualdesktopbadge/releases/latest)
+![Platform](https://img.shields.io/badge/macOS-13%2B-blue)
+[![Downloads](https://img.shields.io/github/downloads/mr-sk/virtualdesktopbadge/total)](https://github.com/mr-sk/virtualdesktopbadge/releases)
+
 A tiny macOS menu-bar app that shows **which desktop (Space) you're on** as a number in a small box. No Dock icon, no window — just the number.
 
 macOS has keyboard shortcuts to jump between desktops (`ctrl+1`, `ctrl+2`, …) but gives no on-screen indication of which one you're currently on. Virtual Desktop Badge fills that gap.
