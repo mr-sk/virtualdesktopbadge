@@ -1,14 +1,12 @@
+<img src="screenshots/icon.png" width="104" align="right" alt="Virtual Desktop Badge icon">
+
 # Virtual Desktop Badge
 
 A tiny macOS menu-bar app that shows **which desktop (Space) you're on** as a number in a small box. No Dock icon, no window — just the number.
 
 macOS has keyboard shortcuts to jump between desktops (`ctrl+1`, `ctrl+2`, …) but gives no on-screen indication of which one you're currently on. Virtual Desktop Badge fills that gap.
 
-```
-┌──┐
-│ 2│   ← in your menu bar
-└──┘
-```
+![Virtual Desktop Badge in the menu bar, with its menu open](screenshots/menu.png)
 
 ## Features
 
@@ -62,6 +60,9 @@ You can reopen this pane any time from the menu: **Grant Accessibility Access…
 - **Labels:** beside the number, Virtual Desktop Badge shows a label for the current desktop:
   - a **manual note** if you've set one (e.g. `email`, `deep work`), or
   - otherwise the **apps currently on that desktop** (frontmost first, up to 3 then `+N`), updated live as you open and close them.
+
+  ![A manual note vs. the automatic app list](screenshots/labels.png)
+
 - Click the badge for the menu:
   - **Set Note for This Desktop…** — type a note for the current desktop (blank clears it; a note overrides the auto app list).
   - **Grant Accessibility Access…** — opens the relevant Settings pane.
