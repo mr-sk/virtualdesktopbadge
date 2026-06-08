@@ -8,6 +8,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let tracker = SpaceTracker()
     private var keyMonitor: Any?
     private var pendingKeyConfirm: DispatchWorkItem?
+    private var labelRefreshScheduled = false
+    private var pollTimer: Timer?
     private let noteStore = NoteStore(store: UserDefaults.standard)
     // Maps the number-row key codes to desktops for the instant ctrl+digit path.
     // This is the keyboard shortcut set only (ten digit keys: 1-9, 0), NOT a cap
@@ -108,9 +110,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         pendingKeyConfirm?.cancel()
         pendingKeyConfirm = nil
         refreshFromSystem()
+        // The on-screen window list can lag a space change, so re-read the label
+        // a moment later — otherwise a no-note desktop briefly shows the old apps.
+        scheduleAppLabelRefresh()
     }
 
-    /// Keep the live app list fresh as apps are launched, activated, or quit.
+    /// Keep the live app list fresh as apps are launched, activated, or quit,
+    /// plus a low-frequency poll to catch changes no notification covers — e.g.
+    /// an app closing its last window while staying running.
     private func observeApps() {
         let center = NSWorkspace.shared.notificationCenter
         for name: NSNotification.Name in [
@@ -120,10 +127,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ] {
             center.addObserver(self, selector: #selector(appsChanged), name: name, object: nil)
         }
+        pollTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
+            self?.scheduleAppLabelRefresh()
+        }
     }
 
     @objc private func appsChanged() {
-        refreshLabel()
+        scheduleAppLabelRefresh()
+    }
+
+    /// Coalesce app-list label refreshes. App switches can fire rapidly, so a
+    /// burst collapses into a single window-list read a moment later instead of
+    /// reading on every event.
+    private func scheduleAppLabelRefresh() {
+        guard !labelRefreshScheduled else { return }
+        labelRefreshScheduled = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let self else { return }
+            self.labelRefreshScheduled = false
+            self.refreshLabel()
+        }
     }
 
     /// Show the current desktop of the primary display (the menu-bar screen).
@@ -172,6 +195,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         alert.accessoryView = field
         alert.addButton(withTitle: "OK")
         alert.addButton(withTitle: "Cancel")
+        // Focus the field (with its text selected) so you can type/replace
+        // immediately and press Return to save.
+        alert.window.initialFirstResponder = field
         NSApp.activate(ignoringOtherApps: true)
         if alert.runModal() == .alertFirstButtonReturn {
             noteStore.setNote(field.stringValue, for: number)
