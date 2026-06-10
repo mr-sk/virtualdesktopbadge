@@ -69,7 +69,7 @@ You can reopen this pane any time from the menu: **Grant Accessibility Access**
 
 - Switch desktops however you like; the badge follows.
 - **Labels:** beside the number, Virtual Desktop Badge shows a label for the current desktop:
-  - a **manual note** if you've set one (e.g. `email`, `deep work`), or
+  - a **manual note** if you've set one (e.g. `email`, `deep work`)
   - otherwise the **apps currently on that desktop** (frontmost first, up to 3 then `+N`), updated live as you open and close them.
 - Click the badge for the menu:
   - **Set Note for This Desktop**: type a note for the current desktop (blank clears it; a note overrides the auto app list).
