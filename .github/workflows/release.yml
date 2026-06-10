@@ -21,6 +21,8 @@ jobs:
         run: swift test --skip BadgeRendererTests
 
       - name: Build and package the app
+        env:
+          APP_VERSION: ${{ github.ref_name }}
         run: bash scripts/package_app.sh
 
       - name: Zip the app bundle

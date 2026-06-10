@@ -127,8 +127,12 @@ The pure logic lives in `VirtualDesktopBadgeCore` precisely so it can be tested 
 - Auto app-labels only reflect the desktop you're currently viewing; macOS doesn't expose the windows on desktops you aren't looking at (which is all the badge needs).
 - The Space-number derivation relies on a private, undocumented macOS API; it may need updating on major macOS releases.
 
-## License
+## Author
 
 An idea and project brought to you by [sk](https://github.com/mr-sk) of [skheavyindustries.com](https://skheavyindustries.com).
 
 Always welcome to feedback & improvements!
+
+## License
+
+Released under the [MIT License](LICENSE).
