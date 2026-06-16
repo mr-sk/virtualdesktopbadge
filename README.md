@@ -8,6 +8,8 @@ OSX has keyboard shortcuts to jump between desktops (ie: `ctrl+1`, `ctrl+2`, …
 
 ![Virtual Desktop Badge in the menu bar](screenshots/menubar.png)
 
+In-depth write-up on my site: https://skheavyindustries.com/blog/where-am-i-mapping-osx-virtual-desktops.html
+
 ## Download
 
 Grab the latest `VirtualDesktopBadge.zip` from the [**Releases**](https://github.com/mr-sk/virtualdesktopbadge/releases/latest) page, unzip it, and move **VirtualDesktopBadge.app** to `/Applications`.
